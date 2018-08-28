@@ -1,0 +1,54 @@
+{
+  "name": "sh4bang/user-bundle",
+  "type": "symfony-bundle",
+  "description": "Symfony bundle for user management",
+  "keywords": ["User"],
+  "homepage": "https://github.com/sh4bang/UserBundle",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Loic Sambourg",
+      "email": "sh4bang.dev@gmail.com"
+    }
+  ],
+  "require": {
+    "php": "^7.2",
+    "symfony/framework-bundle": "^4.1",
+    "symfony/translation": "^4.1"
+  },
+  "require-dev": {
+    "symfony/phpunit-bridge": "^4.0"
+  },
+  "config": {
+    "platform": {
+      "php": "7.2.3"
+    },
+    "preferred-install": {
+      "*": "dist"
+    },
+    "sort-packages": true
+  },
+  "autoload": {
+    "psr-4": {
+      "Sh4bang\\UserBundle\\": ""
+    },
+    "exclude-from-classmap": [
+      "/Tests/"
+    ]
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Sh4bang\\UserBundle\\Tests\\": "tests/"
+    }
+  },
+  "conflict": {
+    "symfony/symfony": "<4.1"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.1.x-dev"
+    }
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

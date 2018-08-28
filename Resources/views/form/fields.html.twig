@@ -1,0 +1,8 @@
+{% block checkbox_link_widget %}
+    <div class="form-check">
+        <input type="checkbox" id="register_termsAccepted" name="register[termsAccepted]" required="required" class="form-check-input" value="1">
+        {% set link_text = link_text is null ? '' : link_text|trans({}, translation_domain) %}
+        {% set link = link_route is null ? link_text : '<a href="'~path(link_route)~'">'~link_text~'</a>' %}
+        <label {% for attrname, attrvalue in label_attr %} {{ attrname }}="{{ attrvalue }}"{% endfor %}>{{ label|trans({'%link%': link}, translation_domain)|raw }}</label>
+    </div>
+{% endblock %}

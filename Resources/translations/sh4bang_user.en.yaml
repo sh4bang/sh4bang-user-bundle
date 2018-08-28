@@ -1,0 +1,23 @@
+# Register form
+form:
+  register:
+    title: Registration
+    username: Username
+    email: Email
+    password: Password
+    repeat_password: Repeat your password
+    accept_terms: Accept %terms%
+    terms_text_link: terms
+    submit: Register
+  login:
+    title: Log-in
+    login: Email
+    password: Password
+    remember_me: Remember me
+    forgot_pwd: Forgot your password?
+    submit: Log-in
+  forgot:
+    title: Forgot your password ?
+    email: Email
+    submit: Send the request
+

@@ -1,0 +1,24 @@
+# Register form
+form:
+  register:
+    title: Inscription
+    username: Pseudo
+    email: Email
+    password: Mot de passe
+    repeat_password: Confirmation du mot de passe
+    accept_terms: Accepter les %link%
+    terms_text_link: conditions
+    submit: S'enregistrer
+  login:
+    title: Connexion
+    login: Email
+    password: Mot de passe
+    remember_me: Se rappeler de moi
+    forgot_pwd: Mot de passe oublié ?
+    submit: Se connecter
+  forgot:
+    title: Récupération de mot de passe
+    email: Email
+    submit: Envoyer la demande
+
+

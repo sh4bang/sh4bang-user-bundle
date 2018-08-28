@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% trans_default_domain 'sh4bang_user' %}
+
+{% block body %}
+    <h1>{{ 'form.login.title'|trans() }}</h1>
+
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <form action="{{ path('sh4bang_user_login') }}" method="post">
+        <div class="form-group">
+            <label for="username" class="required">{{ 'form.login.login'|trans() }}</label>
+            <input type="text" id="username" name="_username" required="required" class="form-control" value="{{ last_username }}" />
+        </div>
+        <div class="form-group">
+            <label for="password" class="required">{{ 'form.login.password'|trans() }}</label>
+            <input type="password" id="password" name="_password" required="required" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <div class="form-check">
+                <input type="checkbox" id="remember_me" name="_remember_me" class="form-check-input" value="1">
+                <label class="form-check-label" for="remember_me">{{ 'form.login.remember_me'|trans() }}</label>
+            </div>
+        </div>
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+        {#
+            If you want to control the URL the user
+            is redirected to on success (more details below)
+            <input type="hidden" name="_target_path" value="/account" />
+        #}
+
+        <div class="form-group">
+            <button type="submit" class="btn-secondary btn">{{ 'form.login.submit'|trans() }}</button> <a href="{{ path('sh4bang_user_forgot') }}">{{ 'form.login.forgot_pwd'|trans() }}</a>
+        </div>
+    </form>
+
+{% endblock %}
