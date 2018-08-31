@@ -2,15 +2,22 @@
 
 namespace Sh4bang\UserBundle\Controller;
 
+use DateTime;
 use Sh4bang\UserBundle\Entity\User;
-use Sh4bang\UserBundle\Form\ForgotPasswordType;
+use Sh4bang\UserBundle\Form\AskPasswordType;
 use Sh4bang\UserBundle\Form\RegisterType;
+use Sh4bang\UserBundle\Service\TokenGenerator;
+use Swift_Mailer;
+use Swift_Message;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Translation\TranslatorInterface;
 
 class UserController extends AbstractController
 {
@@ -85,22 +92,30 @@ class UserController extends AbstractController
     }
 
     /**
-     * Forgot your password form
+     * Ask for a new password form
      *
-     * @Route("/forgot-password", name="sh4bang_user_forgot")
-     * @param Request                      $request
+     * @Route("/ask-password", name="sh4bang_user_ask_pwd")
+     * @param Request             $request
+     * @param TokenGenerator      $tokenGenerator
+     * @param TranslatorInterface $translator
+     * @param Swift_Mailer        $mailer
+     * @param Session             $session
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function forgotPassword(Request $request)
-    {
+    public function askPassword(
+        Request $request,
+        TokenGenerator $tokenGenerator,
+        TranslatorInterface $translator,
+        Swift_Mailer $mailer,
+        Session $session
+    ) {
         // 1) build the form
-        $user = new User();
-        $form = $this->createForm(ForgotPasswordType::class, $user);
+        $form = $this->createForm(AskPasswordType::class);
         $form->add(
             'submit',
             SubmitType::class,
             [
-                'label' => 'form.forgot.submit',
+                'label' => 'form.ask_pwd.submit',
                 'translation_domain' => 'sh4bang_user'
             ]
         );
@@ -109,23 +124,48 @@ class UserController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // 3) Send email
-//            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-//            $user->setPassword($password);
+            // 3) Prepare resetting
+            $userRepository = $this->getDoctrine()->getRepository('Sh4bangUser:User');
+            $user = $userRepository->findOneBy(['email' => $form->get('email')->getData()]);
+            if ($user === null) {
+                throw new NotFoundHttpException($translator->trans('error.account_not_found', [], 'sh4bang_user'));
+            }
 
             // 4) save the User (if I decide to add a special token for the request) ?
-//            $entityManager = $this->getDoctrine()->getManager();
-//            $entityManager->persist($user);
-//            $entityManager->flush();
+            $user->setToken($tokenGenerator->getToken());
+            $user->setTokenExpiredAt((new DateTime())->add(new \DateInterval('PT24H')));
 
-            // ... do any other work - like sending them an email, etc
-            // maybe set a "flash" success message for the user
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // 5) Send email
+            $message = (new Swift_Message($translator->trans('email.reset_pwd.subject', [], 'sh4bang_user')))
+                ->setFrom('loic.sambourg@tva.ca')
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->renderView(
+                        '@Sh4bangUser/emails/reset_password.html.twig',
+                        [
+                            'name' => $user->getUsername()
+                        ]
+                    ),
+                    'text/html'
+                )
+            ;
+            $mailer->send($message);
+
+            // 6) Send a flash success message for the user
+            $session->getFlashBag()->add(
+                'success',
+                $translator->trans('form.ask_pwd.flashbag_validate', [], 'sh4bang_user')
+            );
 
             return $this->redirectToRoute('sh4bang_user_login');
         }
 
         return $this->render(
-            '@Sh4bangUser/security/forgot_password.html.twig',
+            '@Sh4bangUser/security/ask_password.html.twig',
             [
                 'form' => $form->createView(),
             ]

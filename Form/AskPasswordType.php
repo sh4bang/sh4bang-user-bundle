@@ -11,7 +11,7 @@ use Symfony\Component\Translation\TranslatorInterface;
 /**
  * @property TranslatorInterface translator
  */
-class ForgotPasswordType extends AbstractType
+class AskPasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -20,7 +20,8 @@ class ForgotPasswordType extends AbstractType
                 'email',
                 EmailType::class,
                 [
-                    'label' => 'form.forgot.email',
+                    'mapped' => false,
+                    'label' => 'form.ask_pwd.email',
                     'translation_domain' => 'sh4bang_user'
                 ]
             )
@@ -30,7 +31,7 @@ class ForgotPasswordType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => User::class,
+//            'data_class' => User::class,
         ]);
     }
 }

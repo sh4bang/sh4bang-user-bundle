@@ -16,9 +16,13 @@ form:
     remember_me: Se rappeler de moi
     forgot_pwd: Mot de passe oublié ?
     submit: Se connecter
-  forgot:
+  ask_pwd:
     title: Récupération de mot de passe
     email: Email
     submit: Envoyer la demande
-
-
+    flashbag_validate: Vous allez recevoir un email vous permettant de réinitialiser votre mot de passe
+error:
+  account_not_found: Le compte n'a pas été trouvé
+email:
+  reset_pwd:
+    subject: Demande de réinitialisation du mot de passe

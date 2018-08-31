@@ -16,8 +16,13 @@ form:
     remember_me: Remember me
     forgot_pwd: Forgot your password?
     submit: Log-in
-  forgot:
+  ask_pwd:
     title: Forgot your password ?
     email: Email
     submit: Send the request
-
+    flashbag_validate: You will soon receive an email for resetting your password
+error:
+  account_not_found: Account not found
+email:
+  reset_pwd:
+    subject: Password reinitialization

@@ -4,7 +4,6 @@ namespace Sh4bang\UserBundle\Form;
 use Sh4bang\UserBundle\Entity\User;
 use Sh4bang\UserBundle\Form\Type\CheckboxLinkType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;

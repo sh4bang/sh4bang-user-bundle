@@ -2,6 +2,7 @@
 
 namespace Sh4bang\UserBundle\Entity;
 
+use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -9,8 +10,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Table(name="sh4bang_users")
- * @ORM\Entity()
- * TODO : add repository
+ * @ORM\Entity(repositoryClass="Sh4bang\UserBundle\Repository\Sh4bangUserRepository")
+ * @ORM\HasLifecycleCallbacks()
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="username", message="Username already taken")
  */
@@ -47,15 +48,40 @@ class User implements UserInterface, \Serializable
      */
     private $email;
 
-//    /**
-//     * @ORM\Column(type="string")
-//     */
-//    private $roles = [];
+    /**
+     * @var string Generated security token
+     *
+     * @ORM\Column(type="string", length=32, nullable=true)
+     */
+    private $token;
+
+    /**
+     * @var \DateTime Time until the token is still good
+     * @ORM\Column(name="token_expired_at", type="datetime", nullable=true)
+     */
+    private $tokenExpiredAt;
+
+    //    /**
+    //     * @ORM\Column(type="string")
+    //     */
+    //    private $roles = [];
 
     /**
      * @ORM\Column(name="is_active", type="boolean")
      */
     private $isActive;
+
+    /**
+     * @var \DateTime Time when resource is created
+     * @ORM\Column(name="created_at", type="datetime", nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime Time when resource was updated
+     * @ORM\Column(name="updated_at", type="datetime", nullable=true)
+     */
+    private $updatedAt;
 
     public function __construct()
     {
@@ -149,6 +175,46 @@ class User implements UserInterface, \Serializable
     }
 
     /**
+     * @param bool $isActive
+     */
+    public function setIsActive($isActive): void
+    {
+        $this->isActive = (bool)$isActive;
+    }
+
+    /**
+     * @return string
+     */
+    public function getToken(): string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string $token
+     */
+    public function setToken(string $token): void
+    {
+        $this->token = $token;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getTokenExpiredAt(): \DateTime
+    {
+        return $this->tokenExpiredAt;
+    }
+
+    /**
+     * @param \DateTime $tokenExpiredAt
+     */
+    public function setTokenExpiredAt(\DateTime $tokenExpiredAt): void
+    {
+        $this->tokenExpiredAt = $tokenExpiredAt;
+    }
+
+    /**
      * Returns the roles granted to the user.
      *
      * Alternatively, the roles might be stored on a ``roles`` property,
@@ -162,20 +228,44 @@ class User implements UserInterface, \Serializable
         return array('ROLE_USER');
     }
 
-//    /**
-//     * @param array $roles
-//     */
-//    public function setRoles($roles): void
-//    {
-//        $this->roles = $roles;
-//    }
+    //    /**
+    //     * @param array $roles
+    //     */
+    //    public function setRoles($roles): void
+    //    {
+    //        $this->roles = $roles;
+    //    }
 
     /**
-     * @param bool $isActive
+     * @return \DateTime
      */
-    public function setIsActive($isActive): void
+    public function getCreatedAt(): \DateTime
     {
-        $this->isActive = (bool)$isActive;
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTime $createdAt
+     */
+    public function setCreatedAt(\DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt(\DateTime $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
     }
 
     /**
@@ -240,5 +330,21 @@ class User implements UserInterface, \Serializable
             // see section on salt below
             // $this->salt
             ) = unserialize($serialized, array('allowed_classes' => false));
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function prePersist()
+    {
+        $this->setCreatedAt(new DateTime());
+    }
+
+    /**
+     * @ORM\PreUpdate()
+     */
+    public function preUpdate()
+    {
+        $this->setUpdatedAt(new DateTime());
     }
 }

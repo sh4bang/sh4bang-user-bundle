@@ -3,7 +3,7 @@
   "type": "symfony-bundle",
   "description": "Symfony bundle for user management",
   "keywords": ["User"],
-  "homepage": "https://github.com/sh4bang/UserBundle",
+  "homepage": "https://github.com/sh4bang/sh4bang-user-bundle",
   "license": "MIT",
   "authors": [
     {
@@ -14,6 +14,7 @@
   "require": {
     "php": "^7.2",
     "symfony/framework-bundle": "^4.1",
+    "symfony/orm-pack": "^1.0.5",
     "symfony/translation": "^4.1"
   },
   "require-dev": {
