@@ -1,3 +1,0 @@
-sh4bang_user:
-    resource: '@Sh4bangUserBundle/Controller/'
-    type: annotation

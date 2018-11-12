@@ -1,0 +1,3 @@
+sh4bang_user_profile_consult:
+    path: /my-profile
+    controller: 'Sh4bang\UserBundle\Controller\UserController::profile'

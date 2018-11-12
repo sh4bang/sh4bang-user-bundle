@@ -1,0 +1,9 @@
+sh4bang_user_admin:
+    resource: '@Sh4bangUserBundle/Resources/config/routes/sh4bang_user_admin.yaml'
+    prefix: /admin
+
+sh4bang_user_security:
+    resource: '@Sh4bangUserBundle/Resources/config/routes/sh4bang_user_security.yaml'
+
+sh4bang_user_profile:
+    resource: '@Sh4bangUserBundle/Resources/config/routes/sh4bang_user_profile.yaml'

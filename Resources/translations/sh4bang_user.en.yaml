@@ -1,14 +1,21 @@
 # Register form
 form:
-  register:
-    title: Registration
-    username: Username
+  user:
     email: Email
     password: Password
     repeat_password: Repeat your password
+    submit: Submit
+  register:
+    title: Registration
     accept_terms: Accept %terms%
     terms_text_link: terms
     submit: Register
+    flashbag_validate: Vous will receive an email so that you can confirm you account
+    flashbag_reopen: Vous will receive an email so that you can reopen your account
+  confirm_account:
+    flashbag_validate: Your account is now active
+  reopen_account:
+    flashbag_validate: Your account is now reopened
   login:
     title: Log-in
     login: Email
@@ -17,12 +24,63 @@ form:
     forgot_pwd: Forgot your password?
     submit: Log-in
   ask_pwd:
-    title: Forgot your password ?
+    title: Forgot your password?
     email: Email
     submit: Send the request
     flashbag_validate: You will soon receive an email for resetting your password
+  reset_pwd:
+    title: Choose your new password
+    password: New password
+    repeat_password: Repeat your password
+    submit: Send the request
+    flashbag_validate: Password successfully updated
+
 error:
+  account_already_registered: That account already exists and is active. If needed, you can request a password change via the log in form.
+  account_status_verified: Your account is already active.
+  account_status_pending: Your account hasn't been confirmed yet. Please check your emails so that you can confirm you account.
+  account_status_closed: Your account has been closed after your request. To reactivate your account, please register again with your used email.
+  account_status_banned: Your account has been banned.
   account_not_found: Account not found
+  account_locked: Your account is currently locked for security purpose. Please try again later.
+  bad_credential: Mauvais identifiants
+  bad_credential_account_locked: "Bad credentials: your account has been locked for %time% seconds for security reason"
+  token_invalid: Token is invalid or expired
+  token_not_found: Token not found
+  token_already_generated:
+    generic: A request has already been sent too recently
+    register: You already tried to create an account too recently with that email. Check your emails.
+    change_password: You already tried to change your password too recently.
+    reopen: You already tried to reopen your account too recently. Check your emails.
+
 email:
+  default:
+    header: This email has been sent automatically, please do not reply.
+    footer: |
+      Delete this email if you do not have ask for this.
+
+      Thank you for using our service.
+  register:
+    subject: Account creation
+    body:
+      text: 'Welcome aboard, please click the confirmation link:'
+      text2: |
+        Your generated password is: %pwd%
+        We strongly suggest you to change it as soon as possible.
+      link_label: Confirm you account
+  change_password:
+    subject: Your password has been reinitialized
+    body:
+      text: Your password has been updated.
+      text2: |
+        Your new password (updated by the administrator) is: %pwd%
+        We strongly suggest to change it as soon as possible.
+  reopen_account:
+    subject: Reopening your account
+    body:
+      text: 'Click the following link so that you can reopen your account:'
   reset_pwd:
     subject: Password reinitialization
+    body:
+      text: 'In order to change your password, click here:'
+      link_label: Change password

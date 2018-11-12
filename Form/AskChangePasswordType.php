@@ -1,17 +1,13 @@
 <?php
 namespace Sh4bang\UserBundle\Form;
 
-use Sh4bang\UserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Translation\TranslatorInterface;
 
-/**
- * @property TranslatorInterface translator
- */
-class AskPasswordType extends AbstractType
+class AskChangePasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -22,6 +18,14 @@ class AskPasswordType extends AbstractType
                 [
                     'mapped' => false,
                     'label' => 'form.ask_pwd.email',
+                    'translation_domain' => 'sh4bang_user'
+                ]
+            )
+            ->add(
+                'submit',
+                SubmitType::class,
+                [
+                    'label' => 'form.ask_pwd.submit',
                     'translation_domain' => 'sh4bang_user'
                 ]
             )

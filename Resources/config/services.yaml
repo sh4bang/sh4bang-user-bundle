@@ -1,1 +1,76 @@
-#services:
+services:
+    # --- Listener -------------------------------
+    Sh4bang\UserBundle\EventListener\LoginListener:
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login }
+
+    # --- Controller -----------------------------
+    Sh4bang\UserBundle\Controller\:
+        resource: '../../Controller'
+        tags: ['controller.service_arguments']
+
+    # --- Command --------------------------------
+    Sh4bang\UserBundle\Command\:
+        resource: '../../Command'
+        tags: ['console.command']
+
+    Sh4bang\UserBundle\Command\CreateUserCommand:
+        arguments:
+            - '@Sh4bang\UserBundle\Service\UserManager'
+            - '@Sh4bang\UserBundle\Service\TokenManager'
+#            - '@Sh4bang\UserBundle\Service\Mailer\TwigSwiftMailer'
+            - '%sh4bang_user_config%'
+        tags: ['console.command']
+
+    Sh4bang\UserBundle\Command\UpdateUserCommand:
+        arguments:
+            - '@Sh4bang\UserBundle\Service\UserManager'
+            - '@Sh4bang\UserBundle\Service\TokenManager'
+#            - '@Sh4bang\UserBundle\Service\Mailer\TwigSwiftMailer'
+            - '%sh4bang_user_config%'
+        tags: ['console.command']
+
+    Sh4bang\UserBundle\Command\DeleteExpiredTokensCommand:
+        arguments:
+            - '@Sh4bang\UserBundle\Service\TokenManager'
+        tags: ['console.command']
+
+    # --- FormType -------------------------------
+    Sh4bang\UserBundle\Form\Type\RoleType:
+        arguments:
+            - '%security.role_hierarchy.roles%'
+        tags: ['form.type']
+
+    # --- Service --------------------------------
+    Sh4bang\UserBundle\Service\:
+        resource: '../../Service'
+
+    Sh4bang\UserBundle\Service\UserManager:
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@security.password_encoder'
+
+    Sh4bang\UserBundle\Service\TokenManager:
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@Sh4bang\UserBundle\Service\TokenGenerator'
+
+    Sh4bang\UserBundle\Service\Mailer\TwigSwiftMailer:
+        arguments:
+            - '@mailer'
+            - '@router'
+            - '@twig'
+            - '%sh4bang_user_config%'
+
+    # --- Security --------------------------------
+    Sh4bang\UserBundle\Security\Sh4bangUserAuthenticator:
+        arguments:
+            - '@doctrine.orm.default_entity_manager'
+            - '@router'
+            - '@security.csrf.token_manager'
+            - '@security.password_encoder'
+            - '@translator'
+            - '@Sh4bang\UserBundle\Service\UserManager'
+            - '%sh4bang_user_config%'

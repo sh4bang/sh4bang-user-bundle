@@ -37,7 +37,7 @@ class TokenGenerator
      * @param int $length
      * @return string
      */
-    public function getToken($length=32)
+    public function generateToken($length = 32)
     {
         $token = "";
         $codeAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";

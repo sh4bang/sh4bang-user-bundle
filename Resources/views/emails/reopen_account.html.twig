@@ -1,0 +1,15 @@
+{% extends '@Sh4bangUser/emails/base.html.twig' %}
+
+{% trans_default_domain 'sh4bang_user' %}
+
+{% block subject %}
+    {{ 'email.reopen_account.subject'|trans() }}
+{% endblock %}
+
+{% block body_text %}
+    {{ 'email.reopen_account.body.text'|trans() }} {{ reopenAccountUrl }}
+{% endblock %}
+
+{% block body_html %}
+    {{ 'email.reopen_account.body.text'|trans() }}<a href="{{ reopenAccountUrl }}">{{ 'email.register.body.link_label'|trans() }}</a>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% trans_default_domain 'sh4bang_user' %}
+
+{% block subject %}{% endblock %}
+
+
+{% block header_text %}
+    {{ 'email.default.header'|trans()|nl2br }}
+    ---------------------------------------
+{% endblock %}
+
+{% block header_html %}
+    {{ 'email.default.header'|trans()|nl2br }}
+    <br />---------------------------------------<br />
+{% endblock %}
+
+
+{% block body_text %}{% endblock %}
+
+{% block body_html %}{% endblock %}
+
+
+{% block footer_text %}
+    ---------------------------------------
+    {{ 'email.default.footer'|trans()|nl2br }}
+{% endblock %}
+
+{% block footer_html %}
+    <br />---------------------------------------<br />
+    {{ 'email.default.footer'|trans()|nl2br }}
+{% endblock %}

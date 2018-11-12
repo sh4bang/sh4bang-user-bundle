@@ -1,0 +1,27 @@
+sh4bang_user_admin_create:
+    path: /create
+    controller: Sh4bang\UserBundle\Controller\AdminUserController::create
+    methods: [GET, POST]
+
+sh4bang_user_admin_read:
+    path: /list/{page}
+    controller: Sh4bang\UserBundle\Controller\AdminUserController::read
+    defaults:
+        page: 1
+    requirements:
+        page: '\d+'
+    methods: [GET]
+
+sh4bang_user_admin_update:
+    path: /update/{id}
+    controller: Sh4bang\UserBundle\Controller\AdminUserController::update
+    requirements:
+        id: '\d+'
+    methods: [GET, POST]
+
+sh4bang_user_admin_delete:
+    path: /delete/{id}
+    controller: Sh4bang\UserBundle\Controller\AdminUserController::delete
+    requirements:
+        id: '\d+'
+    methods: [DELETE]

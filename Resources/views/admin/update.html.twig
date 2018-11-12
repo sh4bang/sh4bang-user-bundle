@@ -1,0 +1,42 @@
+{% extends 'base-admin.html.twig' %}
+
+{% trans_default_domain 'sh4bang_user' %}
+
+{% block body %}
+    <h1>Edit User</h1>
+    {{ form_start(form) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.generatePassword) }}
+    {{ form_row(form.plainPassword.first) }}
+    {{ form_row(form.plainPassword.second) }}
+    {{ form_row(form.sendEmail) }}
+    {{ form_row(form.roles) }}
+    {{ form_row(form.submit) }}
+    {{ form_end(form) }}
+
+    <hr />
+
+    <p>Created: {{ user.createdAt|date("d/m/Y H:i:s") }}</p>
+    {% if user.updatedAt %}
+        <p>Last update: {{ user.updatedAt|date("d/m/Y H:i:s") }}</p>
+    {% else %}
+        <p>Never been updated</p>
+    {% endif %}
+    {% if user.updatedAt %}
+        <p>Last successfully connexion: {{ user.lastLoggedAt|date("d/m/Y H:i:s") }}</p>
+    {% else %}
+        <p>Never been logged in</p>
+    {% endif %}
+    <p>Failed log in streak: {{ user.failedLoginStreak }}</p>
+    {% if user.lockedUntil and user.lockedUntil > "now"|date() %}
+        <p>Locked until: {{ user.lockedUntil|date("d/m/Y H:i:s") }}</p>
+    {% else %}
+        <p>Not locked</p>
+    {% endif %}
+    <p>Account status: {{ user.status }}</p>
+
+    <hr />
+
+    <a class="btn-danger btn" href="{{ path('sh4bang_user_admin_delete', {'id': user.id}) }}">Ban account</a>
+{% endblock %}
+

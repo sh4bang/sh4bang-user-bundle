@@ -9,7 +9,7 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
-    <form action="{{ path('sh4bang_user_login') }}" method="post">
+    <form action="{{ path('sh4bang_user_security_login') }}" method="post">
         <div class="form-group">
             <label for="username" class="required">{{ 'form.login.login'|trans() }}</label>
             <input type="text" id="username" name="_username" required="required" class="form-control" value="{{ last_username }}" />
@@ -33,7 +33,7 @@
         #}
 
         <div class="form-group">
-            <button type="submit" class="btn-secondary btn">{{ 'form.login.submit'|trans() }}</button> <a href="{{ path('sh4bang_user_ask_pwd') }}">{{ 'form.login.forgot_pwd'|trans() }}</a>
+            <button type="submit" class="btn-secondary btn">{{ 'form.login.submit'|trans() }}</button> <a href="{{ path('sh4bang_user_security_ask_change_password') }}">{{ 'form.login.forgot_pwd'|trans() }}</a>
         </div>
     </form>
 

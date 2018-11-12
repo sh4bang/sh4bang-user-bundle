@@ -1,14 +1,21 @@
 # Register form
 form:
-  register:
-    title: Inscription
-    username: Pseudo
+  user:
     email: Email
     password: Mot de passe
     repeat_password: Confirmation du mot de passe
+    submit: Soumettre
+  register:
+    title: Inscription
     accept_terms: Accepter les %link%
     terms_text_link: conditions
     submit: S'enregistrer
+    flashbag_validate: Vous allez recevoir un email pour activer votre compte
+    flashbag_reopen: Vous allez recevoir un email pour réouvrir votre compte
+  confirm_account:
+    flashbag_validate: Votre compte est maintenant activé
+  reopen_account:
+    flashbag_validate: Votre compte est maintenant réouvert
   login:
     title: Connexion
     login: Email
@@ -21,8 +28,59 @@ form:
     email: Email
     submit: Envoyer la demande
     flashbag_validate: Vous allez recevoir un email vous permettant de réinitialiser votre mot de passe
-error:
-  account_not_found: Le compte n'a pas été trouvé
-email:
   reset_pwd:
-    subject: Demande de réinitialisation du mot de passe
+    title: Création du nouveau mot de passe
+    password: Nouveau mot de passe
+    repeat_password: Confirmation du mot de passe
+    submit: Envoyer la demande
+    flashbag_validate: Votre mot de passe a été modifié
+
+error:
+  account_already_registered: Le compte existe déjà et est actif. Si besoin, vous pouvez faire une demande de récupération de mot de passe à l'écran de connexion.
+  account_status_verified: Votre compte est déjà actif.
+  account_status_pending: Le compte n'a pas encore été confirmé. Veuillez consulter vos emails afin d'activer votre compte.
+  account_status_closed: Le compte a été fermé à votre demande. Pour le réactiver, veuillez refaire une inscription avec ce même email.
+  account_status_banned: Votre compte a été banni.
+  account_not_found: Le compte n'a pas été trouvé
+  account_locked: Votre compte est actuellement vérouillé pour des raisons de sécurité. Veuillez réessayer ultérieurement.
+  bad_credential: Mauvais identifiants
+  bad_credential_account_locked: "Mauvais identifiants : votre compte a été bloqué pour %time% secondes pour des raisons de sécurité"
+  token_invalid: Le token fourni n'est pas valide ou est expiré
+  token_not_found: Aucun token trouvé
+  token_already_generated:
+    generic: Vous avez déjà effectué cette demande trop récemment.
+    register: Vous avez déjà demandé à créer votre compte avec ce même mail trop récemment. Vérifiez vos emails.
+    change_password: Vous avez déjà demandé à changer votre mot de passe trop récemment.
+    reopen: Vous avez déjà demandé à réouvrir votre compte trop récemment. Vérifiez vos emails.
+
+email:
+  default:
+    header: Cet e-mail a été envoyé automatiquement, veuillez ne pas répondre à cet e-mail.
+    footer: |
+      Si cet e-mail vous a été envoyé par erreur, merci de l'effacer.
+
+      Merci d'utiliser notre service.
+  register:
+    subject: Création de votre compte
+    body:
+      text: 'Bienvenue dans notre communauté, veuillez cliquer sur le lien de confirmation suivant :'
+      text2: |
+        Votre mot de passe généré est le suivant : %pwd%
+        Nous vous conseillons fortement de le changer dès que possible.
+      link_label: Confirmer mon compte
+  change_password:
+    subject: Votre mot de passe a été réinitialisé
+    body:
+      text: Votre mot de passe a été modifié.
+      text2: |
+        Votre nouveau mot de passe (modifié par un administrateur) est le suivant : %pwd%
+        Nous vous conseillons fortement de le changer dès que possible.
+  reopen_account:
+    subject: Réouverture de votre compte
+    body:
+      text: 'Pour réouvrir votre compte, veuillez cliquer sur le lien suivant :'
+  reset_pwd:
+    subject: Demande de changement du mot de passe
+    body:
+      text: 'Pour changer votre mot de passe, veuillez cliquer sur le lien suivant :'
+      link_label: Changement du mot de passe

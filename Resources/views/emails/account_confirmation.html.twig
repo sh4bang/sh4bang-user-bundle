@@ -1,0 +1,21 @@
+{% extends '@Sh4bangUser/emails/base.html.twig' %}
+
+{% trans_default_domain 'sh4bang_user' %}
+
+{% block subject %}
+    {{ 'email.register.subject'|trans() }}
+{% endblock %}
+
+{% block body_text %}
+    {{ 'email.register.body.text'|trans() }} {{ confirmationUrl }}
+    {% if generatedPassword is defined %}
+        {{ 'email.register.body.text2'|trans({'%pwd%': generatedPassword}) }}
+    {% endif %}
+{% endblock %}
+
+{% block body_html %}
+    {{ 'email.register.body.text'|trans() }}<a href="{{ confirmationUrl }}">{{ 'email.register.body.link_label'|trans() }}</a>
+    {% if generatedPassword is defined %}
+        <p>{{ 'email.register.body.text2'|trans({'%pwd%': generatedPassword}) }}</p>
+    {% endif %}
+{% endblock %}

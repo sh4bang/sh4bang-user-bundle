@@ -1,0 +1,23 @@
+sh4bang_user_security_login:
+    path: /login
+    controller: 'Sh4bang\UserBundle\Controller\SecurityController::login'
+#
+sh4bang_user_security_register:
+    path: /register
+    controller: 'Sh4bang\UserBundle\Controller\SecurityController::register'
+
+sh4bang_user_security_confirm_account:
+    path: /confirmation
+    controller: 'Sh4bang\UserBundle\Controller\SecurityController::confirmAccount'
+
+sh4bang_user_security_ask_change_password:
+    path: /change-password
+    controller: 'Sh4bang\UserBundle\Controller\SecurityController::askChangePassword'
+
+sh4bang_user_security_reopen_account:
+    path: /reopen
+    controller: 'Sh4bang\UserBundle\Controller\SecurityController::reopenAccount'
+
+sh4bang_user_security_reset_password:
+    path: /reset-password
+    controller: 'Sh4bang\UserBundle\Controller\SecurityController::resetPassword'
